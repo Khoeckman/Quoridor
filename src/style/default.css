@@ -1,0 +1,31 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+p,
+span {
+  max-width: 40em;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button:disabled {
+  cursor: initial;
+}
+
+label {
+  font-weight: bold;
+}
+
+img {
+  vertical-align: top;
+}

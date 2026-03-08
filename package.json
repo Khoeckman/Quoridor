@@ -1,0 +1,20 @@
+{
+  "name": "emcc-test-project",
+  "version": "0.0.0",
+  "description": "",
+  "license": "UNLICENSED",
+  "author": "Khoeckman",
+  "private": true,
+  "type": "module",
+  "main": "src/main.ts",
+  "scripts": {
+    "test": "exit 0",
+    "emcc": "emcc cpp/src/main.cpp -O3 -sEXPORT_ES6 -lembind --emit-tsd main.d.ts -o cpp/build/main.js ",
+    "dev": "bunx --bun vite",
+    "build": "bun run emcc && tsc --noEmit && vite build && vite preview",
+    "preview": "bunx --bun vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
+  }
+}

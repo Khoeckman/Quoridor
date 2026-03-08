@@ -1,0 +1,91 @@
+@import './credits.css';
+
+:root {
+  color-scheme: light dark;
+
+  --hue: 230;
+  --pri: hsl(var(--hue), 100%, 60%);
+
+  --err: hsl(0, 100%, 60%);
+
+  --bg: hsl(var(--hue), 18%, 8%);
+  --c12: hsl(var(--hue), 18%, 12%);
+  --c24: hsl(var(--hue), 18%, 24%);
+  --c48: hsl(var(--hue), 18%, 48%);
+  --c72: hsl(var(--hue), 18%, 72%);
+  --fg: hsl(var(--hue), 18%, 96%);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  font-family:
+    Montserrat,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    'Segoe UI',
+    Helvetica,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji';
+  font-size: 16px;
+  color: var(--fg);
+  min-height: 100dvh;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  margin: 0 auto;
+  max-width: 100em;
+  min-height: 100dvh;
+}
+
+footer {
+  padding: 2rem 4rem;
+}
+
+footer p {
+  color: var(--c72);
+  text-align: center;
+  margin: 0 auto;
+}
+
+@media (max-width: 50em) {
+  footer {
+    padding: 2rem;
+  }
+
+  footer p {
+    text-align: unset;
+    margin: 0;
+  }
+}
+
+@media (max-width: 40em) {
+  footer {
+    padding: 2rem 1rem;
+  }
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+a {
+  transition: color 125ms;
+}
+
+a:hover {
+  color: var(--c72);
+}

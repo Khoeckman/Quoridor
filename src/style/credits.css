@@ -1,0 +1,118 @@
+.credits > * {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 1;
+}
+
+.credits > a {
+  overflow: hidden;
+  width: 3rem;
+  height: 3rem;
+  opacity: 0;
+  z-index: 3;
+}
+
+.credits > a:is(:hover, :focus-visible) {
+  width: 4rem;
+  height: 4rem;
+}
+
+.credits .logo > img {
+  user-select: none;
+  position: absolute;
+  border-radius: 0.1rem;
+  width: 3rem;
+  height: 3rem;
+  transition:
+    width 0.5s cubic-bezier(1, 0, 0, 1),
+    height 0.5s cubic-bezier(1, 0, 0, 1),
+    transform 0.5s cubic-bezier(1, 0, 0, 1);
+}
+
+.credits .logo .shadow {
+  filter: blur(4px) opacity(75%);
+}
+
+.credits > a:is(:hover, :focus-visible) ~ .logo > img,
+.credits .project:is(:hover, :focus-visible) ~ .logo > img {
+  width: 4rem;
+  height: 4rem;
+  transform: rotate(360deg);
+}
+
+.credits .project {
+  background-color: var(--c12);
+  border: 1px solid var(--c24);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1rem var(--bg);
+  text-align: left;
+  position: fixed;
+  top: -6.5rem;
+  left: 1rem;
+  padding: 0.75rem 1rem 0.75rem 6rem;
+  height: 5rem;
+  opacity: 0;
+  transform: perspective(16rem) scale(0.75) rotateX(-90deg);
+  transition:
+    top 0.5s cubic-bezier(1, -0.5, 0, 1),
+    opacity 0.5s,
+    transform 0.75s;
+  will-change: transform;
+}
+
+.credits:focus-within .project {
+  border-color: var(--pri);
+}
+
+.credits > a:is(:hover, :focus-visible) ~ .project,
+.credits .project:is(:hover, :focus-visible) {
+  top: 1.5rem;
+  opacity: 1;
+  transform: none;
+}
+
+.credits .project > span {
+  display: block;
+  font-weight: 600;
+  line-height: 1;
+  text-shadow: 0 0 0.1em var(--pri);
+}
+
+.credits .project .name {
+  font-size: 1.5rem;
+  color: var(--pri);
+  margin-bottom: 0.5rem;
+}
+
+.credits .project .date {
+  color: var(--c72);
+}
+
+@media (width < 40em) {
+  .credits {
+    display: none;
+  }
+}
+
+/* Right aligned */
+.credits.right > * {
+  left: unset;
+  right: 2rem;
+}
+
+.credits.right .logo > img {
+  right: 0;
+}
+
+.credits.right > a:is(:hover, :focus-visible) ~ .logo > img,
+.credits.right .project:is(:hover, :focus-visible) ~ .logo > img {
+  transform: rotate(-360deg);
+}
+
+.credits.right .project {
+  text-align: right;
+  left: unset;
+  right: 1rem;
+  padding: 0.75rem 6rem 0.75rem 1rem;
+}
