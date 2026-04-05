@@ -9,7 +9,7 @@
   <meta name="color-scheme" content="light dark">
   <meta name="google-site-verification" content="1Mh0lUvuIjThK1wszSkSxEJcTaV4A9HkE9Vaw_MmsFw" />
 
-  <title>WASM</title>
+  <title>Quoridor Engine</title>
   <link rel="icon" href="/favicon.webp" sizes="192x192" />
 
   <!-- Google Fonts: Montserrat -->
@@ -28,7 +28,45 @@
 
 <body>
   <main>
-    <h1>WASM</h1>
+    <div id="app">
+      <div class="info panel">
+        <section class="players">
+          <h1>Quoridor Engine</h1>
+
+          <h2>Players</h2>
+          <dl>
+            <div id="red-player" class="player red">
+              <dt id="red-name">Red</dt>
+              <dd>
+                Barricades: <span id="red-barricades" class="number">10</span>/10
+              </dd>
+            </div>
+
+            <div id="blue-player" class="player blue">
+              <dt id="blue-name">Blue</dt>
+              <dd>
+                Barricades: <span id="blue-barricades" class="number">10</span>/10
+              </dd>
+            </div>
+          </dl>
+        </section>
+        <section class="moves">
+          <h2>Moves</h2>
+          <ul id="moves">
+            <li class="placeholder">No moves yet</li>
+          </ul>
+          <div>
+            <button id="undo-btn" disabled>Undo</button>
+            <button id="redo-btn" disabled>Redo</button>
+          </div>
+          <div>
+            <button id="reset-btn">New</button>
+            <button id="rotate-btn">Rotate</button>
+          </div>
+        </section>
+      </div>
+      <div id="board" class="board panel"></div>
+    </div>
   </main>
 </body>
 

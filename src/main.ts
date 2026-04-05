@@ -1,5 +1,18 @@
-import MainModuleFactory from '../cpp/build/main.js'
+import BarricadeBoard from './board'
+import type { Color } from './Quoridor'
 
-const module = await MainModuleFactory()
+const board = document.getElementById('board')!
+const red = {
+  player: document.getElementById('red-player')!,
+  name: document.getElementById('red-name')!,
+  barricades: document.getElementById('red-barricades')!,
+}
 
-console.log(module.add(3, 4.5))
+const blue = {
+  player: document.getElementById('blue-player')!,
+  name: document.getElementById('blue-name')!,
+  barricades: document.getElementById('blue-barricades')!,
+}
+
+const bb = new BarricadeBoard(board, red, blue)
+export default bb

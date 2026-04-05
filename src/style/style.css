@@ -1,19 +1,26 @@
-@import './credits.css';
-
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 
-  --hue: 230;
+  --hue: 40;
   --pri: hsl(var(--hue), 100%, 60%);
 
   --err: hsl(0, 100%, 60%);
 
   --bg: hsl(var(--hue), 18%, 8%);
   --c12: hsl(var(--hue), 18%, 12%);
+  --c18: hsl(var(--hue), 18%, 18%);
   --c24: hsl(var(--hue), 18%, 24%);
   --c48: hsl(var(--hue), 18%, 48%);
   --c72: hsl(var(--hue), 18%, 72%);
   --fg: hsl(var(--hue), 18%, 96%);
+
+  --red-bg: #240505;
+  --red: #e54240;
+  --blue-bg: #0a0a28;
+  --blue: #4b83f9;
+
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
 }
 
 html {
@@ -30,62 +37,203 @@ html {
     sans-serif,
     'Apple Color Emoji',
     'Segoe UI Emoji';
-  font-size: 16px;
+  font-size: 14px;
   color: var(--fg);
-  min-height: 100dvh;
 }
 
 body {
-  display: flex;
-  flex-flow: column;
-  margin: 0 auto;
-  max-width: 100em;
-  min-height: 100dvh;
-}
-
-footer {
-  padding: 2rem 4rem;
-}
-
-footer p {
-  color: var(--c72);
-  text-align: center;
-  margin: 0 auto;
-}
-
-@media (max-width: 50em) {
-  footer {
-    padding: 2rem;
-  }
-
-  footer p {
-    text-align: unset;
-    margin: 0;
-  }
-}
-
-@media (max-width: 40em) {
-  footer {
-    padding: 2rem 1rem;
-  }
+  margin: 2rem auto;
+  padding: 0 2rem;
+  max-width: fit-content;
 }
 
 h1 {
-  font-size: 2.5rem;
+  color: #f59e0b;
 }
 
-h2 {
-  font-size: 2rem;
+ul,
+ol,
+dl {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-h3 {
-  font-size: 1.5rem;
+#app {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.75rem;
 }
 
-a {
-  transition: color 125ms;
+.red {
+  --color-bg: var(--red-bg);
+  --color-fg: var(--red);
 }
 
-a:hover {
-  color: var(--c72);
+.blue {
+  --color-bg: var(--blue-bg);
+  --color-fg: var(--blue);
+}
+
+.panel {
+  background-color: var(--c12);
+  border: 1px solid var(--c24);
+  border-radius: 0.5rem;
+  min-height: calc(100dvh - 4rem);
+}
+
+.panel h1,
+.panel h2 {
+  margin: 0 0 0.5em 0;
+}
+
+.info {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1.5rem;
+  background-color: var(--c12);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  width: 16rem;
+  height: 100%;
+}
+
+.info > * {
+  margin: 0;
+}
+
+.info dl {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+.info dl > .player {
+  background-color: var(--color-bg);
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  transition: border-color 125ms;
+}
+
+.info dl > .player.active {
+  border-color: var(--color-fg);
+}
+
+.info dl dt {
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.info dl dt::before {
+  content: '';
+  display: block;
+  border-radius: 50%;
+  left: 0;
+  top: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  opacity: 0;
+  transition: opacity 125ms;
+}
+
+.info dl > .player.active dt::before {
+  opacity: 1;
+}
+
+.info dl dt {
+  color: var(--color-fg);
+}
+
+.info dl dt::before {
+  background-color: var(--color-fg);
+}
+
+.info dl dd {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.number {
+  font-weight: bold;
+}
+
+#moves {
+  flex: 1;
+  background-color: var(--c24);
+  border-radius: 0.5rem;
+  margin-block: 0.75rem;
+  padding: 0.75rem;
+  height: 100%;
+}
+
+#moves > li.placeholder {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.game {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.75rem;
+}
+
+#board {
+  aspect-ratio: 1;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2%;
+  padding: 1.5rem;
+  min-width: 16rem;
+  font-size: calc(100vmin - 4rem);
+  min-height: 0;
+  height: fit-content;
+}
+
+#board .square {
+  will-change: transform;
+  aspect-ratio: 1;
+  background-color: var(--c12);
+  border: 1px solid var(--c18);
+  padding: 20%;
+  transition:
+    background-color 125ms,
+    border-color 125ms,
+    box-shadow 250ms;
+}
+
+#board .square:is(:hover, :focus-visible) {
+  background-color: var(--c18);
+  border-color: var(--c24);
+}
+
+#board .square.player:is(.red, .blue)::after {
+  content: '';
+  display: block;
+  background-color: var(--color-fg);
+  border-radius: 50%;
+  box-shadow:
+    inset 0.25em 0.25em 1em var(--color-bg),
+    0.5em 0.5em 1em var(--color-bg);
+  width: 100%;
+  height: 100%;
+}
+
+#board .square.move {
+  background-color: var(--color-bg);
+  border-color: var(--color-fg);
+  border-radius: 0.5em;
+  box-shadow: inset 0 0 0.5em var(--color-fg);
+}
+
+#board .square.move:is(:hover, :focus-visible) {
+  background-color: var(--color-bg);
+  border-color: var(--white);
 }
