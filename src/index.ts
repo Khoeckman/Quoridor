@@ -59,7 +59,3 @@ export default class Quoridor {
     return false
   }
 }
-
-const game = new Quoridor()
-
-console.log(game)

@@ -1,20 +1,54 @@
 {
-  "name": "emcc-test-project",
-  "version": "0.0.0",
-  "description": "",
-  "license": "UNLICENSED",
+  "name": "quoridor-js",
+  "version": "0.0.1",
+  "description": "Quoridor board game npm package with core logic and move validation.",
+  "license": "MIT",
   "author": "Khoeckman",
-  "private": true,
   "type": "module",
-  "main": "src/main.ts",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.umd.js"
+    }
+  },
+  "files": [
+    "src/",
+    "dist/"
+  ],
   "scripts": {
-    "test": "exit 0",
-    "emcc": "emcc cpp/src/main.cpp -O3 -sEXPORT_ES6 -lembind --emit-tsd main.d.ts -o cpp/build/main.js ",
-    "dev": "bunx --bun vite",
-    "build": "bun run emcc && tsc --noEmit && vite build && vite preview",
-    "preview": "bunx --bun vite preview"
+    "build": "rollup -c rollup.config.js",
+    "prepack": "npm run build"
   },
   "devDependencies": {
-    "vite": "^7.3.1"
-  }
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-replace": "^6.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "prettier": "^3.8.1",
+    "rollup": "^4.59.0",
+    "rollup-plugin-delete": "^3.0.2",
+    "typescript": "^6.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Khoeckman/Quoridor#readme",
+  "bugs": {
+    "url": "https://github.com/Khoeckman/Quoridor/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khoeckman/Quoridor.git"
+  },
+  "keywords": [
+    "quoridor",
+    "board game",
+    "barricade"
+  ]
 }
