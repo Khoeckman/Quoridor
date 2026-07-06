@@ -1,11 +1,9 @@
-export type Color = 'r' | 'b'
-export type Square = [number, number]
-export type Player = { position: Square; barricades: number }
-export type Barricade = { color: Color; position: Square }
-export type Move = Square | Barricade
+import GameParser from './pgn'
+import type { Color, PlayerCount, Square, Barricade, Move, Player } from './types'
 
 export default class Quoridor {
   static readonly BOARD_SIZE = 9
+  static readonly TURN_ORDER = 'rbyg'
 
   static posToCoord(pos: string): Square {
     const file = pos.charCodeAt(0) - 97
@@ -18,44 +16,88 @@ export default class Quoridor {
     return String.fromCharCode(97 + file) + (rank + 1)
   }
 
-  red: Player = { position: [0, 4], barricades: 10 } // e1
-  blue: Player = { position: [8, 4], barricades: 10 } // e9
-  barricades: Barricade[] = []
-  turn: Color = 'r'
+  #pgn!: GameParser
+  #player!: Record<Color, Player>
+
+  playerCount: PlayerCount
+
+  turnIdx: 0 | 1 | 2 | 3 = 0
 
   moves: Move[] = []
+  barricades: Barricade[] = []
 
-  directions = [
-    [-1, 0],
-    [1, 0],
-    [0, -1],
-    [0, 1],
-  ]
+  history: Move[] = []
+  historyCursor = -1
 
-  constructor() {
-    this.#getLegalMoves()
+  constructor(playerCount: PlayerCount, pgn = '') {
+    if (!(playerCount >= 2 && playerCount <= 4 && ~~playerCount === playerCount))
+      throw RangeError('Player count must be 2, 3, or 4')
+    this.playerCount = playerCount
+
+    this.pgn = pgn
   }
 
-  get player() {
-    return this.turn === 'r' ? this.red : this.blue
+  get pgn(): GameParser {
+    return this.#pgn
   }
 
-  #getLegalMoves() {
-    this.moves = []
-  }
+  set pgn(value: string | GameParser) {
+    const pgn = String(value)
 
-  move(move: Move) {
-    if (Array.isArray(move)) {
-      this.player.position = move
-    } else {
-      this.barricades.push(move)
-      this.player.barricades--
+    if (String(this.#pgn) === pgn) {
+      this.historyCursor = this.history.length - 1
+      return
     }
+    this.#pgn = new GameParser(pgn)
+    this.reset()
+
+    if (!value) return
+    // Todo: parse PGN and set up game state accordingly
   }
 
-  isGameOver(): Color | false {
-    if (this.red.position[0] === Quoridor.BOARD_SIZE - 1) return 'r'
-    if (this.blue.position[0] === 0) return 'b'
-    return false
+  get turn(): Color {
+    return Quoridor.TURN_ORDER[this.turnIdx] as Color
+  }
+
+  // Player getters
+  get red(): Player {
+    return this.#player.r
+  }
+
+  get blue(): Player {
+    return this.#player.b
+  }
+
+  get yellow(): Player {
+    if (this.playerCount < 3) throw Error('Yellow player only exists in a 3+ player game')
+    return this.#player.y
+  }
+
+  get green(): Player {
+    if (this.playerCount < 4) throw Error('Green player only exists in a 4-player game')
+    return this.#player.g
+  }
+
+  // Current player getter
+  get player(): Player {
+    return this.#player[this.turn]
+  }
+
+  reset() {
+    const barricades = this.playerCount === 2 ? 10 : 5
+
+    this.#player = {} as Record<Color, Player>
+    this.#player.r = { pos: [0, 4], barricades } // e1
+    this.#player.b = { pos: [8, 4], barricades } // e9
+    this.#player.y = { pos: [4, 0], barricades } // a5
+    this.#player.g = { pos: [4, 8], barricades } // i5
+
+    this.turnIdx = 0
+
+    this.moves = []
+    this.barricades = []
+
+    this.history = []
+    this.historyCursor = -1
   }
 }

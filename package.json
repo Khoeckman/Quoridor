@@ -21,6 +21,8 @@
     "dist/"
   ],
   "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
     "build": "rollup -c rollup.config.js",
     "prepack": "npm run build"
   },
@@ -30,10 +32,12 @@
     "@rollup/plugin-replace": "^6.0.3",
     "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
+    "@vitest/ui": "^4.1.4",
     "prettier": "^3.8.1",
     "rollup": "^4.59.0",
     "rollup-plugin-delete": "^3.0.2",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.4"
   },
   "publishConfig": {
     "access": "public"

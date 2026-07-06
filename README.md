@@ -17,14 +17,7 @@ Quoridor is a strategic board game where players navigate a grid to reach the op
 ## Installation
 
 ```bash
-# npm
 npm i quoridor-js
-
-# pnpm
-pnpm add quoridor-js
-
-# bun
-bun i quoridor-js
 ```
 
 <br>
